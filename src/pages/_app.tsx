@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 import { Provider } from "react-redux"
 
 import { wrapper } from "@/store"
-import { Toaster } from "sonner"
+import { Toaster } from "@teamlead.incubator/ui-kit"
 
 // eslint-disable-next-line import/extensions
 import "@teamlead.incubator/ui-kit/css"
