@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { useSigninMutation } from "@/services/services"
@@ -39,18 +38,20 @@ const loginSchema = z.object({
 type LoginFields = z.infer<typeof loginSchema>
 
 export default function SignIn() {
-  const [signin, { error }] = useSigninMutation()
+  const [signin] = useSigninMutation()
   const router = useRouter()
   const token = ""
-
-  //TODO how to handle error from server
-  const [serverError, setServerError] = useState<null | string>(null)
 
   const {
     control,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    setError
   } = useForm<LoginFields>({
+    defaultValues: {
+      email: "",
+      password: ""
+    },
     mode: "onTouched",
     resolver: zodResolver(loginSchema)
   })
@@ -63,7 +64,7 @@ export default function SignIn() {
         router.push("/")
       })
       .catch(err => {
-        setServerError(err?.data?.messages || "An unexpected error occurred.")
+        setError("password", { message: err?.data?.messages ?? "An unexpected error occurred." })
       })
   })
 
@@ -93,7 +94,7 @@ export default function SignIn() {
           />
           <FormInput
             control={control}
-            error={errors?.password?.message || serverError}
+            error={errors?.password?.message}
             labelText={"Password"}
             name={"password"}
             type={"password"}
