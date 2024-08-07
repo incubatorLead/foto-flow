@@ -62,6 +62,7 @@ export default function SignIn() {
       .then(async ({ accessToken }) => {
         localStorage.setItem("token", accessToken)
         router.push("/")
+        // TODO make redirect to user account page
       })
       .catch(err => {
         setError("password", { message: err?.data?.messages ?? "An unexpected error occurred." })
