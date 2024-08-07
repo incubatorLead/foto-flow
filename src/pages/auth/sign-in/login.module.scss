@@ -1,0 +1,41 @@
+.login {
+  width: 100%;
+  max-width: 378px;
+  margin: 24px auto 0;
+  padding: 24px;
+}
+
+.title {
+  margin-bottom: 13px;
+  text-align: center;
+}
+
+.btnActions {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.forgotPassword {
+  align-self: flex-end;
+  color: var(--color-light-900);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.noAccount {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.switchForm {
+  margin-top: 6px;
+}
