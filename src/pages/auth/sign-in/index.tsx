@@ -79,11 +79,11 @@ export default function SignIn() {
           Sign In
         </Typography>
         <div className={s.btnActions}>
-          {/* TODO change href for links () */}
-          <Button as={Link} className={s.button} href={"sads"} title={"login via google"}>
+          {/* TODO change href={"sads"} */}
+          <Button as={Link} href={"sads"} title={"login via google"}>
             <IconGoogle height={36} width={36} />
           </Button>
-          <Button as={Link} className={s.button} href={"sads"} title={"login via github"}>
+          <Button as={Link} href={"sads"} title={"login via github"}>
             <IconGithub height={36} width={36} />
           </Button>
         </div>
