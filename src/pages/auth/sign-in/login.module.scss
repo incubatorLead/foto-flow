@@ -24,8 +24,11 @@
 
 .forgotPassword {
   align-self: flex-end;
-  margin-top: 12px;
   color: var(--color-light-900);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .noAccount {
