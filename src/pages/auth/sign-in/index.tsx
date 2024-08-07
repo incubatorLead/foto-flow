@@ -79,12 +79,13 @@ export default function SignIn() {
           Sign In
         </Typography>
         <div className={s.btnActions}>
-          <Link className={s.button} href={"sads"} title={"login via google"}>
+          {/* TODO change href for links () */}
+          <Button as={Link} className={s.button} href={"sads"} title={"login via google"}>
             <IconGoogle height={36} width={36} />
-          </Link>
-          <Link className={s.button} href={"sads"} title={"login via github"}>
+          </Button>
+          <Button as={Link} className={s.button} href={"sads"} title={"login via github"}>
             <IconGithub height={36} width={36} />
-          </Link>
+          </Button>
         </div>
         <form className={s.loginForm} onSubmit={onSubmit}>
           <FormInput
@@ -100,13 +101,14 @@ export default function SignIn() {
             name={"password"}
             type={"password"}
           />
-          <Link
+          <Typography
+            as={Link}
             className={clsx("regular_text_16", s.forgotPassword)}
             href={"sads"}
             title={"forgot password"}
           >
             Forgot Password
-          </Link>
+          </Typography>
           <Button fullWidth type={"submit"} variant={"primary"}>
             Sign In
           </Button>
