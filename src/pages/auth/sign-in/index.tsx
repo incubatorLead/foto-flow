@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { useMeQuery, useSigninMutation, useSignoutMutation } from "@/services/services"
@@ -8,6 +9,7 @@ import {
   FormInput,
   IconGithub,
   IconGoogle,
+  Modal,
   Typography
 } from "@teamlead.incubator/ui-kit"
 import clsx from "clsx"
@@ -72,6 +74,9 @@ export default function SignIn() {
       })
   })
 
+  //temp logic for logout
+  const [isLogout, setIsLogout] = useState(false)
+
   return (
     <>
       <Head>
@@ -123,9 +128,36 @@ export default function SignIn() {
           Sign Up
         </Button>
       </Card>
-      <Button onClick={() => signout()} variant={"primary"}>
-        Logout
-      </Button>
+      <Modal
+        onOpenChange={setIsLogout}
+        open={isLogout}
+        title={"Logout"}
+        trigger={<Button variant={"primary"}>Logout</Button>}
+      >
+        <Typography
+          style={{
+            padding: "30px 24px"
+          }}
+          variant={"regular_text_16"}
+        >
+          Are you really want to log out of your account _email name_?
+          <div style={{ marginTop: "18px", textAlign: "right" }}>
+            <Button
+              onClick={() => {
+                signout()
+                setIsLogout(false)
+              }}
+              style={{ marginRight: "10px" }}
+              variant={"secondary"}
+            >
+              YES
+            </Button>
+            <Button onClick={() => setIsLogout(false)} variant={"primary"}>
+              NO
+            </Button>
+          </div>
+        </Typography>
+      </Modal>
     </>
   )
 }

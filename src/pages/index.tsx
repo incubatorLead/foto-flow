@@ -1,6 +1,7 @@
-import { Button, DatePicker, IconArrowDown, Input } from "@teamlead.incubator/ui-kit"
+import { Button } from "@teamlead.incubator/ui-kit"
 import { Inter } from "next/font/google"
 import Head from "next/head"
+import Link from "next/link"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -13,10 +14,9 @@ export default function Home() {
         <meta content={"width=device-width, initial-scale=1"} name={"viewport"} />
       </Head>
       <>
-        <DatePicker onSelect={() => {}}></DatePicker>
-        <Button>aaa</Button>
-        <IconArrowDown style={{ color: "black" }} />
-        <Input />
+        <Button as={Link} href={"/auth/sign-in"} variant={"outlined"}>
+          Sign-In
+        </Button>
       </>
     </>
   )
