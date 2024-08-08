@@ -1,0 +1,47 @@
+.header {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-dark-300);
+}
+
+.headerWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: block;
+}
+
+.controls {
+  display: flex;
+  margin-left: auto;
+}
+
+.notification {
+  margin-right: 50px;
+  padding: 6px;
+  color: var(--color-light-100);
+}
+
+.notificationOpened {
+  color: var(--color-accent-500);
+}
+
+.language {
+  min-width: 164px;
+}
+
+.notification + .language {
+  margin-left: 50px;
+}
+
+.signin {
+  margin-left: 36px;
+}
+
+.signup {
+  margin-left: 24px;
+}
