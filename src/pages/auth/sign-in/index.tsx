@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 
-import { useSigninMutation } from "@/services/services"
+import { useMeQuery, useSigninMutation, useSignoutMutation } from "@/services/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Button,
@@ -39,6 +39,7 @@ type LoginFields = z.infer<typeof loginSchema>
 
 export default function SignIn() {
   const [signin] = useSigninMutation()
+  const [signout] = useSignoutMutation()
   const router = useRouter()
   const token = ""
 
@@ -49,19 +50,21 @@ export default function SignIn() {
     setError
   } = useForm<LoginFields>({
     defaultValues: {
-      email: "",
-      password: ""
+      email: "teamlead.incubator@gmail.com",
+      password: "12345Qwert-"
     },
     mode: "onTouched",
     resolver: zodResolver(loginSchema)
   })
+
+  const { data } = useMeQuery()
 
   const onSubmit = handleSubmit(data => {
     signin(data)
       .unwrap()
       .then(async ({ accessToken }) => {
         localStorage.setItem("token", accessToken)
-        router.push("/")
+        // router.push("/")
         // TODO make redirect to user account page
       })
       .catch(err => {
@@ -116,10 +119,13 @@ export default function SignIn() {
         <Typography className={s.noAccount} variant={"regular_text_16"}>
           Don’t have an account?
         </Typography>
-        <Button className={s.switchForm} fullWidth variant={"text"}>
+        <Button as={Link} className={s.switchForm} fullWidth href={"auth/sign-up"} variant={"text"}>
           Sign Up
         </Button>
       </Card>
+      <Button onClick={() => signout()} variant={"primary"}>
+        Logout
+      </Button>
     </>
   )
 }
