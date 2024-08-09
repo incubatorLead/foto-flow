@@ -10,6 +10,7 @@ import { Toaster } from "@teamlead.incubator/ui-kit"
 import "../styles/index.scss"
 // eslint-disable-next-line import/extensions
 import "@teamlead.incubator/ui-kit/css"
+import { Header } from "@/components/header/header"
 
 export default function App({ Component, ...rest }: AppProps) {
   const { props, store } = wrapper.useWrappedStore(rest)
@@ -27,7 +28,7 @@ export default function App({ Component, ...rest }: AppProps) {
 function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <header>header</header>
+      <Header />
       <main>{children}</main>
     </>
   )
