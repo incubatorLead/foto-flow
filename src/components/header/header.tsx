@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 
 import { Container } from "@/components/container/container"
+import { useMeQuery, useSignoutMutation } from "@/services/services"
 import {
   Button,
   DropdownMenu,
@@ -11,11 +12,9 @@ import {
   DropdownMenuTrigger,
   IconBellFill,
   IconBellOutline,
-  IconBlock,
-  IconMoreHorizontal,
-  IconPersonRemoveOutline,
   IconRussiaFlag,
   IconUnitedKingdomFlag,
+  Modal,
   Select,
   Typography
 } from "@teamlead.incubator/ui-kit"
@@ -31,6 +30,11 @@ const languages = [
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const { data } = useMeQuery()
+
+  const [signout] = useSignoutMutation()
+  const [isLogout, setIsLogout] = useState(false)
 
   return (
     <header className={s.header}>
@@ -116,12 +120,48 @@ export const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
           <Select className={s.language} defaultValue={languages[0].value} options={languages} />
-          <Button as={Link} className={s.signin} href={"/auth/sign-in"} variant={"text"}>
-            Sign in
-          </Button>
-          <Button as={Link} className={s.signup} href={"/auth/sign-up"} variant={"primary"}>
-            Sign up
-          </Button>
+          {!data && (
+            <>
+              <Button as={Link} className={s.signin} href={"/auth/sign-in"} variant={"text"}>
+                Sign in
+              </Button>
+              <Button as={Link} className={s.signup} href={"/auth/sign-up"} variant={"primary"}>
+                Sign up
+              </Button>
+            </>
+          )}
+          {data && (
+            <Modal
+              onOpenChange={setIsLogout}
+              open={isLogout}
+              title={"Logout"}
+              trigger={<Button variant={"primary"}>Logout</Button>}
+            >
+              <Typography
+                style={{
+                  padding: "30px 24px"
+                }}
+                variant={"regular_text_16"}
+              >
+                Are you really want to log out of your account _email name_?
+                <div style={{ marginTop: "18px", textAlign: "right" }}>
+                  <Button
+                    onClick={() => {
+                      signout()
+                      setIsLogout(false)
+                    }}
+                    style={{ marginRight: "10px" }}
+                    variant={"secondary"}
+                  >
+                    YES
+                  </Button>
+                  <Button onClick={() => setIsLogout(false)} variant={"primary"}>
+                    NO
+                  </Button>
+                </div>
+              </Typography>
+            </Modal>
+          )}
         </div>
       </Container>
     </header>

@@ -1,7 +1,6 @@
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-import { useMeQuery, useSigninMutation, useSignoutMutation } from "@/services/services"
+import { useLazyMeQuery, useSigninMutation } from "@/services/services"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Button,
@@ -9,7 +8,6 @@ import {
   FormInput,
   IconGithub,
   IconGoogle,
-  Modal,
   Typography
 } from "@teamlead.incubator/ui-kit"
 import clsx from "clsx"
@@ -41,7 +39,6 @@ type LoginFields = z.infer<typeof loginSchema>
 
 export default function SignIn() {
   const [signin] = useSigninMutation()
-  const [signout] = useSignoutMutation()
   const router = useRouter()
   const token = ""
 
@@ -59,13 +56,14 @@ export default function SignIn() {
     resolver: zodResolver(loginSchema)
   })
 
-  const { data } = useMeQuery()
+  const [getMe] = useLazyMeQuery()
 
   const onSubmit = handleSubmit(data => {
     signin(data)
       .unwrap()
       .then(async ({ accessToken }) => {
         localStorage.setItem("token", accessToken)
+        await getMe()
         // router.push("/")
         // TODO make redirect to user account page
       })
@@ -73,9 +71,6 @@ export default function SignIn() {
         setError("password", { message: err?.data?.messages ?? "An unexpected error occurred." })
       })
   })
-
-  //temp logic for logout
-  const [isLogout, setIsLogout] = useState(false)
 
   return (
     <>
@@ -128,36 +123,6 @@ export default function SignIn() {
           Sign Up
         </Button>
       </Card>
-      <Modal
-        onOpenChange={setIsLogout}
-        open={isLogout}
-        title={"Logout"}
-        trigger={<Button variant={"primary"}>Logout</Button>}
-      >
-        <Typography
-          style={{
-            padding: "30px 24px"
-          }}
-          variant={"regular_text_16"}
-        >
-          Are you really want to log out of your account _email name_?
-          <div style={{ marginTop: "18px", textAlign: "right" }}>
-            <Button
-              onClick={() => {
-                signout()
-                setIsLogout(false)
-              }}
-              style={{ marginRight: "10px" }}
-              variant={"secondary"}
-            >
-              YES
-            </Button>
-            <Button onClick={() => setIsLogout(false)} variant={"primary"}>
-              NO
-            </Button>
-          </div>
-        </Typography>
-      </Modal>
     </>
   )
 }

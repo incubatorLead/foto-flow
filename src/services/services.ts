@@ -16,12 +16,26 @@ export const service = createApi({
   }),
   endpoints: builder => ({
     me: builder.query<MeResponse, void>({
+      //providesTags: ["Me"],
       query: () => ({
         method: "GET",
         url: "v1/auth/me"
       })
     }),
     signin: builder.mutation<{ accessToken: "string" }, Signin>({
+      //invalidatesTags: ["Me"],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled
+          //const test = localStorage.getItem("token")
+          //localStorage.removeItem("token")
+          //console.log(test, "success")
+        } catch (error) {
+          console.log(error, "error")
+
+          return
+        }
+      },
       query: body => {
         return {
           body,
@@ -32,17 +46,10 @@ export const service = createApi({
     }),
     signout: builder.mutation<void, void>({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-        try {
-          await queryFulfilled
-          const test = localStorage.getItem("token")
+        await queryFulfilled
+        const test = localStorage.getItem("token")
 
-          localStorage.removeItem("token")
-          console.log(test)
-        } catch (error) {
-          console.log(error)
-
-          return
-        }
+        localStorage.removeItem("token")
       },
       query: () => {
         return {
@@ -54,4 +61,17 @@ export const service = createApi({
   })
 })
 
-export const { useMeQuery, useSigninMutation, useSignoutMutation } = service
+export const { useLazyMeQuery, useMeQuery, useSigninMutation, useSignoutMutation } = service
+/*
+logout: builder.mutation<void, void>({
+  async onQueryStarted(_, { dispatch, queryFulfilled }) {
+    await queryFulfilled;
+    localStorage.removeItem('accessToken');
+    dispatch(authApi.util.resetApiState());
+  },
+  query: (body) => ({
+    body,
+    method: 'POST',
+    url: 'v1/auth/logout'
+  })
+}),*/
