@@ -75,7 +75,7 @@ export default function SignIn() {
   return (
     <>
       <Head>
-        <title>Home | Instagram Client</title>
+        <title>Sign In</title>
       </Head>
       <Card className={s.login}>
         <Typography className={s.title} variant={"large"}>
@@ -106,9 +106,10 @@ export default function SignIn() {
           />
           <Typography
             as={Link}
-            className={clsx("regular_text_16", s.forgotPassword)}
+            className={s.forgotPassword}
             href={"sads"}
             title={"forgot password"}
+            variant={"regular_text_14"}
           >
             Forgot Password
           </Typography>
@@ -119,7 +120,7 @@ export default function SignIn() {
         <Typography className={s.noAccount} variant={"regular_text_16"}>
           Don’t have an account?
         </Typography>
-        <Button as={Link} className={s.switchForm} fullWidth href={"auth/sign-up"} variant={"text"}>
+        <Button as={Link} fullWidth href={"auth/sign-up"} variant={"text"}>
           Sign Up
         </Button>
       </Card>

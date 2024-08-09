@@ -14,12 +14,14 @@
   display: flex;
   gap: 60px;
   justify-content: center;
+  margin-bottom: 24px;
 }
 
 .loginForm {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  margin-bottom: 18px;
 }
 
 .forgotPassword {
@@ -32,10 +34,6 @@
 }
 
 .noAccount {
-  margin-top: 18px;
+  margin-bottom: 6px;
   text-align: center;
-}
-
-.switchForm {
-  margin-top: 6px;
 }
